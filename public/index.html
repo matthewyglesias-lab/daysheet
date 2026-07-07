@@ -223,7 +223,46 @@ body.theme-dark .sidebar{background:rgba(20,29,36,.72);}
 .tb-LCSW,.tb-PhD{background:var(--good-soft);color:var(--good);}
 .tb-Provider{background:var(--violet-soft);color:var(--violet);}
 .card-name{font-weight:700;font-size:.95rem;color:var(--ink);}
-.card-sub{font-size:.77rem;color:var(--ink-3);margin-top:2px;}
+.card-sub{font-size:.77rem;color:var(--ink-3);margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.card-sub-meta{color:var(--ink-3);}
+.status-pill{display:inline-flex;align-items:center;gap:5px;font-size:.7rem;font-weight:800;letter-spacing:.01em;padding:2px 9px;border-radius:999px;white-space:nowrap;}
+.status-pill::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0;}
+.status-pill.s-new{background:var(--good-soft);color:var(--good);}
+.status-pill.s-nonew{background:var(--warn-soft);color:var(--warn);}
+.status-pill.s-inactive{background:rgba(122,149,168,.14);color:var(--ink-3);}
+.meta-chip{display:inline-flex;align-items:center;font-size:.72rem;color:var(--ink-3);background:var(--rail);border:1px solid var(--border);padding:2px 9px;border-radius:999px;}
+.chip-more{cursor:pointer;font-weight:700;color:var(--accent);background:var(--accent-soft);border:1px solid transparent;}
+.expand-status{margin-bottom:12px;}
+/* home launchpad */
+.home-hero{max-width:760px;margin:8px auto 24px;text-align:center;}
+.home-eyebrow{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.12em;color:var(--brand);margin-bottom:8px;}
+.home-title{font-family:'Space Grotesk',sans-serif;font-size:1.75rem;color:var(--ink);margin-bottom:18px;letter-spacing:-.02em;}
+.home-search-wrap{position:relative;}
+.home-search-wrap svg{position:absolute;left:18px;top:26px;transform:translateY(-50%);color:var(--ink-3);pointer-events:none;}
+.home-inp{width:100%;padding:15px 18px 15px 48px;border:1px solid var(--border);border-radius:16px;background:var(--paper);font-size:1rem;color:var(--ink);box-shadow:var(--sh-1);outline:none;}
+.home-inp:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--brand-soft);}
+.home-results{margin-top:8px;text-align:left;background:var(--paper);border:1px solid var(--border);border-radius:16px;box-shadow:var(--sh-2);overflow:hidden;display:none;}
+.home-results.open{display:block;}
+.home-result{display:flex;align-items:center;gap:12px;padding:11px 15px;cursor:pointer;border-bottom:1px solid var(--border);transition:background .12s;}
+.home-result:last-child{border-bottom:none;}
+.home-result:hover{background:var(--rail);}
+.home-result-icon{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:var(--rail);color:var(--ink-3);flex-shrink:0;font-size:.85rem;}
+.home-result-icon.r-prov{background:var(--brand-soft);color:var(--brand);}
+.home-result-label{display:block;font-weight:600;font-size:.9rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.home-result-sub{display:block;font-size:.76rem;color:var(--ink-3);}
+.home-nudge{display:flex;align-items:center;gap:10px;max-width:760px;margin:0 auto 22px;padding:12px 16px;background:var(--bad-soft);border:1px solid rgba(239,68,68,.2);border-radius:14px;color:var(--bad);font-weight:600;font-size:.85rem;cursor:pointer;}
+.home-nudge-cta{margin-left:auto;font-weight:800;white-space:nowrap;}
+.home-section-label{max-width:1080px;margin:0 auto;}
+.home-recent{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:8px auto 24px;max-width:1080px;}
+.home-recent-card{display:flex;align-items:center;gap:11px;padding:11px 13px;background:var(--paper);border:1px solid var(--border);border-radius:14px;cursor:pointer;box-shadow:var(--sh-1);transition:transform .12s,box-shadow .12s;}
+.home-recent-card:hover{transform:translateY(-2px);box-shadow:var(--sh-2);}
+.home-recent-name{font-weight:700;font-size:.88rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.home-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:8px auto 0;max-width:1080px;}
+.home-tile{display:flex;flex-direction:column;gap:8px;padding:18px;background:var(--paper);border:1px solid var(--border);border-radius:16px;cursor:pointer;box-shadow:var(--sh-1);transition:transform .14s,box-shadow .14s,border-color .14s;}
+.home-tile:hover{transform:translateY(-2px);box-shadow:var(--sh-2);border-color:var(--brand);}
+.home-tile-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--brand-soft);color:var(--brand);}
+.home-tile-title{font-weight:700;font-size:.98rem;color:var(--ink);}
+.home-tile-desc{font-size:.8rem;color:var(--ink-3);line-height:1.4;}
 .card-chev{margin-left:auto;color:var(--ink-3);flex-shrink:0;transition:transform .3s var(--ease);}
 .card-chev.open{transform:rotate(180deg);}
 .card-inner{padding:16px 18px;}
@@ -1235,7 +1274,7 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
 <div class="app-shell">
   
 <header class="chrome">
-  <a class="chrome-brand" href="#">
+  <a class="chrome-brand" href="#" onclick="go('home');return false;">
     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
     IPMG <em>Portal</em>
   </a>
@@ -1252,7 +1291,10 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
 
 <aside class="sidebar">
   <span class="nav-section-label">Main</span>
-  <button class="nav-tab active" onclick="go('find')" id="ntab-find">
+  <button class="nav-tab active" onclick="go('home')" id="ntab-home">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.5a.75.75 0 0 0 .75.75H9.75v-6a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 .75.75v6h4.5a.75.75 0 0 0 .75-.75V9.75M8.25 21h8.25"/></svg><span>Home</span>
+  </button>
+  <button class="nav-tab" onclick="go('find')" id="ntab-find">
     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0z"/></svg><span>Providers</span>
   </button>
   <button class="nav-tab" onclick="go('ins')" id="ntab-ins">
@@ -1275,8 +1317,60 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
 </aside>
 
   <main class="main-content">
-    
-<section id="sec-find" class="section active">
+
+<section id="sec-home" class="section active">
+  <div class="home-hero">
+    <div class="home-eyebrow" id="home-greeting">Welcome</div>
+    <h1 class="home-title">What do you need?</h1>
+    <div class="home-search-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z"/></svg>
+      <input id="home-inp" class="home-inp" placeholder="Search a provider, insurance plan, or office…" oninput="homeSearch()" autocomplete="off">
+    </div>
+    <div class="home-results" id="home-results"></div>
+  </div>
+
+  <div class="home-nudge" id="home-health-nudge" style="display:none" onclick="go('health')">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+    <span class="home-nudge-text"></span>
+    <span class="home-nudge-cta">Review →</span>
+  </div>
+
+  <div id="home-recent-wrap" style="display:none">
+    <div class="sec-label home-section-label">Recently viewed</div>
+    <div class="home-recent" id="home-recent"></div>
+  </div>
+
+  <div class="sec-label home-section-label">Jump to</div>
+  <div class="home-tiles">
+    <div class="home-tile" onclick="go('find')">
+      <div class="home-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0z"/></svg></div>
+      <div class="home-tile-title">Find a provider</div>
+      <div class="home-tile-desc">Schedules, locations, insurance, and telehealth links</div>
+    </div>
+    <div class="home-tile" onclick="go('ins')">
+      <div class="home-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg></div>
+      <div class="home-tile-title">Check insurance</div>
+      <div class="home-tile-desc">Turn a card or plan into a plain scheduling answer</div>
+    </div>
+    <div class="home-tile" onclick="go('off')">
+      <div class="home-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg></div>
+      <div class="home-tile-title">Offices</div>
+      <div class="home-tile-desc">Addresses, phone numbers, hours, and site teams</div>
+    </div>
+    <div class="home-tile" onclick="go('appt')">
+      <div class="home-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg></div>
+      <div class="home-tile-title">Appointments</div>
+      <div class="home-tile-desc">Build appointment cards and reminder scripts</div>
+    </div>
+    <div class="home-tile" onclick="go('health')">
+      <div class="home-tile-icon"><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h4.5l2.25-6.75 4.5 13.5 2.25-6.75H21"/></svg></div>
+      <div class="home-tile-title">Data Health</div>
+      <div class="home-tile-desc">Records worth double-checking before you rely on them</div>
+    </div>
+  </div>
+</section>
+
+<section id="sec-find" class="section">
   <div class="pg-head">
     <h1>Providers</h1>
     <p id="find-subtitle">Search by name, specialty, insurance, or location</p>
@@ -2173,6 +2267,7 @@ function go(sec) {
   document.getElementById('ntab-'+sec).classList.add('active');
   if(sec==='find' && !document.getElementById('find-results').children.length) runFind();
   if(sec==='health') renderDataHealth();
+  if(sec==='home') renderHome();
 }
 
 // ── DARK MODE ─────────────────────────────────────────────────────────────────
@@ -2223,6 +2318,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.classList.contains('theme-dark') ? SUN_ICON : MOON_ICON;
   runFind();
   updateHealthNavBadge();
+  renderHome();
 });
 
 // ── FIND ──────────────────────────────────────────────────────────────────────
@@ -2284,18 +2380,25 @@ function runFind() {
 }
 
 // ── PROVIDER CARD HTML ────────────────────────────────────────────────────────
+function providerStatus(p){
+  if(p.status==='inactive') return {cls:'s-inactive',label:'Inactive'};
+  if(p.noNew) return {cls:'s-nonew',label:'Not taking new'};
+  return {cls:'s-new',label:'Accepting new'};
+}
 function pcHTML(key, p) {
   const stopWords = new Set(['MD','NP','PMHNP','LCSW','DO','PhD','Dr.','Dr']);
   const ini = (p.display||'?').split(' ').filter(w=>!stopWords.has(w)).slice(0,2).map(w=>w[0]||'').join('');
   const pt  = p.type||'Provider';
-  const locs = Object.keys(p.locations||{}).slice(0,3).map(l=>l.replace(/_/g,' ')).join(', ');
-  const more = Object.keys(p.locations||{}).length>3 ? ` +${Object.keys(p.locations||{}).length-3}` : '';
+  const locsArr = Object.keys(p.locations||{});
+  const locs = locsArr.slice(0,3).map(l=>l.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())).join(', ');
+  const more = locsArr.length>3 ? ` +${locsArr.length-3}` : '';
+  const st = providerStatus(p);
   return `<div class="card" id="pc-${key}">
   <div class="card-head" onclick="togglePC('${key}')">
     <div class="av av-${pt}">${ini||'?'}</div>
     <div style="flex:1;min-width:0">
       <div class="card-name">${esc(p.display||key)}</div>
-      <div class="card-sub">${pt}${p.gender?' · '+p.gender:''}${locs?' · '+locs+more:''}</div>
+      <div class="card-sub"><span class="status-pill ${st.cls}">${st.label}</span>${locs?`<span class="card-sub-meta">${esc(locs+more)}</span>`:''}</div>
     </div>
     <span class="type-badge tb-${pt}">${pt}</span>
     <svg class="card-chev" id="chev-${key}" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
@@ -2311,15 +2414,21 @@ function togglePC(key) {
   const chev = document.getElementById('chev-'+key);
   const head = body.previousElementSibling;
   const open = body.classList.contains('open');
-  if(!open) { fillExpand(key); body.classList.add('open'); head.classList.add('open'); chev.classList.add('open'); }
+  if(!open) { fillExpand(key); body.classList.add('open'); head.classList.add('open'); chev.classList.add('open'); recordRecent(key); }
   else       { body.classList.remove('open'); head.classList.remove('open'); chev.classList.remove('open'); }
+}
+function revealChips(btn){
+  const row = btn.parentElement;
+  row.querySelectorAll('[data-extra]').forEach(el=>el.style.display='');
+  btn.remove();
 }
 
 function fillExpand(key) {
   const p = providers[key]; if(!p) return;
   const el = document.getElementById('pbi-'+key);
   if(el.dataset.filled) return; el.dataset.filled='1';
-  // schedule
+  const st = providerStatus(p);
+  // schedule — the thing staff need most, so it leads
   let schedHtml = '';
   for(const [loc, days] of Object.entries(p.locations||{})) {
     const locL = loc.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
@@ -2330,25 +2439,30 @@ function fillExpand(key) {
     }).join('');
     schedHtml += `<div style="margin-bottom:8px"><div class="sec-label">${locL}</div><div class="days-row">${pills}</div></div>`;
   }
-  const profileIds = p.insuranceProfileIds || [];
-  const credHtml = profileIds.length
-    ? `<div class="chip-row">${profileIds.map(id=>{
-        const prof = insProfile(id) || {};
-        return `<span class="chip ins-chip-link" title="Open BH payer context" onclick="openPayerProfileFromProvider('${esc(id)}', event)">${esc(profileDisplayName(prof).replace(/ — /g,' · '))}</span>`;
-      }).join('')}</div><div class="ins-context-strip" style="margin-top:8px"><b>Tip:</b> each payer chip opens the Insurance section with this provider's roster profile loaded.</div>`
-    : '<span style="color:var(--ink-3);font-size:.8rem">No credentialing profile data</span>';
   const doxyHtml = p.doxy
     ? `<div class="info-row"><span class="info-icon">` + VIDEO_ICON + `</span><span class="info-val"><a href="${esc(p.doxy)}" target="_blank" style="color:var(--brand)">${esc(p.doxy)}</a></span></div>` : '';
-  const flags = [];
-  if(p.spanish) flags.push('<span class="tag tag-brand">Spanish</span>');
-  if(p.noNew)   flags.push('<span class="tag tag-warn">No New Patients</span>');
-  if(p.initMin) flags.push(`<span class="tag tag-accent">Init: ${p.initMin}min</span>`);
-  if(p.fuMin)   flags.push(`<span class="tag tag-accent">FU: ${p.fuMin}min</span>`);
+  // secondary details — lower in the hierarchy
+  const details = [];
+  if(p.spanish) details.push('<span class="tag tag-brand">Spanish-speaking</span>');
+  if(p.gender) details.push(`<span class="meta-chip">${esc(p.gender)}</span>`);
+  if(p.initMin) details.push(`<span class="meta-chip">Initial ${p.initMin} min</span>`);
+  if(p.fuMin)   details.push(`<span class="meta-chip">Follow-up ${p.fuMin} min</span>`);
+  // insurance — summary + progressively-disclosed plan chips
+  const profileIds = p.insuranceProfileIds || [];
+  const LIMIT = 6;
+  const chipHtml = profileIds.length
+    ? `<div class="chip-row">${profileIds.map((id,i)=>{
+        const prof = insProfile(id) || {};
+        const hide = i>=LIMIT ? ' style="display:none" data-extra="1"' : '';
+        return `<span class="chip ins-chip-link"${hide} title="Open Insurance check" onclick="openPayerProfileFromProvider('${esc(id)}', event)">${esc(profileDisplayName(prof).replace(/ — /g,' · '))}</span>`;
+      }).join('')}${profileIds.length>LIMIT?`<button type="button" class="chip chip-more" onclick="revealChips(this)">+${profileIds.length-LIMIT} more</button>`:''}</div>`
+    : '<span style="color:var(--ink-3);font-size:.8rem">No credentialing profile data</span>';
   el.innerHTML = `
-    ${flags.length?`<div class="chip-row" style="margin-bottom:12px">${flags.join('')}</div>`:''}
-    ${schedHtml?`<div style="margin-bottom:12px"><div class="sec-label">Schedule</div>${schedHtml}</div>`:''}
-    ${doxyHtml?`<div style="margin-bottom:10px">${doxyHtml}</div>`:''}
-    <div style="margin-bottom:12px"><div class="sec-label">Insurance</div>${providerPayerInsightHtml(p)}${credHtml}</div>
+    <div class="expand-status"><span class="status-pill ${st.cls}">${st.label}</span></div>
+    ${schedHtml?`<div style="margin-bottom:12px"><div class="sec-label">Schedule</div>${schedHtml}</div>`:'<div class="sec-label">Schedule</div><p style="color:var(--ink-3);font-size:.8rem;margin-bottom:12px">No schedule mapped — confirm availability before booking.</p>'}
+    ${doxyHtml?`<div style="margin-bottom:12px"><div class="sec-label">Telehealth link</div>${doxyHtml}</div>`:''}
+    ${details.length?`<div class="chip-row" style="margin-bottom:12px">${details.join('')}</div>`:''}
+    <div style="margin-bottom:12px"><div class="sec-label">Insurance</div>${providerPayerInsightHtml(p)}${chipHtml}</div>
     <div style="display:flex;gap:7px;flex-wrap:wrap">
       <button class="btn btn-primary" style="font-size:.76rem;padding:6px 13px" onclick="useForAppt('${key}')">
         ` + CAL_ICON_SM + ` Use for Appointment
@@ -3506,27 +3620,52 @@ document.addEventListener('keydown',e=>{
     document.body.style.overflow='';
   }
 });
+function openProviderFromSearch(key){
+  go('find');
+  setTimeout(()=>{
+    findFilter={type:'',spanish:false,acceptingNew:false};
+    document.querySelectorAll('#sec-find .chip').forEach(c=>c.classList.remove('active'));
+    const inp=document.getElementById('find-inp'); if(inp) inp.value=(providers[key]&&providers[key].display)||key;
+    runFind();
+    setTimeout(()=>{ const card=document.getElementById('pc-'+key); if(card){ const body=document.getElementById('pb-'+key); if(body&&!body.classList.contains('open')) togglePC(key); card.scrollIntoView({behavior:'smooth',block:'center'}); } },60);
+  },80);
+}
+function buildGlobalResults(q, opts){
+  q=(q||'').toLowerCase().trim();
+  opts=opts||{};
+  const results=[];
+  if(opts.includeSections!==false){
+    [['Home','home'],['Providers','find'],['Insurance','ins'],['Offices','off'],['Appointments','appt'],['Data Health','health']].forEach(([l,s])=>{
+      if(!q||l.toLowerCase().includes(q)) results.push({type:'nav',label:l,sub:'Portal section',tag:'Section',action:`go('${s}')`});
+    });
+  }
+  if(q.length>1){
+    Object.entries(providers).forEach(([k,p])=>{
+      const profileText=(p.insuranceProfileIds||[]).map(id=>{const prof=insProfile(id)||{}; return [profileDisplayName(prof), prof.name, prof.canonicalName, ...(prof.aliases||[])].join(' ')}).join(' ').toLowerCase();
+      const locText=Object.keys(p.locations||{}).join(' ').toLowerCase();
+      const payerMatch=profileText.includes(q), locMatch=locText.includes(q);
+      if((p.display||'').toLowerCase().includes(q) || payerMatch || locMatch){
+        const st=providerStatus(p);
+        const loc0=Object.keys(p.locations||{})[0]; const locL=loc0?loc0.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()):'';
+        results.push({type:'prov',label:p.display||k,sub:`${p.type||'Provider'} · ${st.label}${payerMatch?' · payer match':locL?' · '+locL:''}`,tag:'Provider',
+          action:`openProviderFromSearch('${k.replace(/'/g,"\\'")}')`});
+      }
+    });
+    Object.values((D||{}).ins_profiles||{}).forEach(p=>{
+      const text=[p.id, profileDisplayName(p), p.name, p.canonicalName, p.lineOfBusiness, p.medicalCarrier, p.behavioralAdmin, p.networkLayer, ...(p.aliases||[]), ...(p.tags||[])].join(' ').toLowerCase();
+      if(text.includes(q)) results.push({type:'ins',label:profileDisplayName(p),sub:`${insRoleLabel(p)} · ${Number(p.providerCount||0)} providers`,tag:'Payer',
+        action:`go('ins');setTimeout(()=>{insGuideSelectProfile('${(p.id||'').replace(/'/g,"\\'")}');},90)`});
+    });
+    Object.entries(offices).forEach(([k,o])=>{
+      const text=[k,o.name,o.addr,o.address,o.phone,o.hours,o.manager].join(' ').toLowerCase();
+      if(text.includes(q)) results.push({type:'office',label:o.name||k,sub:o.phone||o.addr||'Office location',tag:'Office',action:`go('off');setTimeout(()=>openOffModal('${k.replace(/'/g,"\\'")}'),90)`});
+    });
+  }
+  return results;
+}
 function cmdkSearch() {
   const q=(document.getElementById('cmdk-inp').value||'').toLowerCase().trim();
-  const results=[];
-  [['Providers','find'],['Insurance','ins'],['Offices','off'],['Appointments','appt'],['Data Health','health']].forEach(([l,s])=>{
-    if(!q||l.toLowerCase().includes(q)) results.push({type:'nav',label:l,sub:'Portal section',tag:'Section',action:`go('${s}')`});
-  });
-  if(q.length>1) Object.values((D||{}).ins_profiles||{}).forEach(p=>{
-    const text=[p.id, profileDisplayName(p), p.name, p.canonicalName, p.lineOfBusiness, p.medicalCarrier, p.behavioralAdmin, p.networkLayer, ...(p.aliases||[]), ...(p.tags||[])].join(' ').toLowerCase();
-    if(text.includes(q)) results.push({type:'ins',label:profileDisplayName(p),sub:`${insRoleLabel(p)} · ${Number(p.providerCount||0)} roster-linked providers`,tag:'Payer',
-      action:`go('ins');setTimeout(()=>{insGuideSelectProfile('${(p.id||'').replace(/'/g,"\'")}');},90)`});
-  });
-  if(q.length>1) Object.entries(providers).forEach(([k,p])=>{
-    const profileText=(p.insuranceProfileIds||[]).map(id=>{const prof=insProfile(id)||{}; return [profileDisplayName(prof), prof.name, prof.canonicalName, ...(prof.aliases||[])].join(' ')}).join(' ').toLowerCase();
-    if((p.display||'').toLowerCase().includes(q) || profileText.includes(q))
-      results.push({type:'prov',label:p.display||k,sub:`${p.type||'Provider'}${profileText.includes(q)?' · payer match':''}`,tag:'Provider',
-        action:`go('find');setTimeout(()=>{findFilter={type:'',spanish:false,acceptingNew:false};document.querySelectorAll('#sec-find .chip').forEach(c=>c.classList.remove('active'));document.getElementById('find-inp').value='${(p.display||'').replace(/'/g,"\'")}';runFind();},100)`});
-  });
-  if(q.length>1) Object.entries(offices).forEach(([k,o])=>{
-    const text=[k,o.name,o.address,o.phone,o.hours].join(' ').toLowerCase();
-    if(text.includes(q)) results.push({type:'office',label:o.name||k,sub:o.phone||'Office location',tag:'Office',action:`go('off');setTimeout(()=>openOffModal('${k.replace(/'/g,"\'")}'),90)`});
-  });
+  const results=buildGlobalResults(q);
   cmdkSel=0;
   if(!results.length){document.getElementById('cmdk-list').innerHTML='<div class="cmdk-item"><span class="cmdk-item-label" style="color:var(--ink-3)">No results</span></div>';return;}
   document.getElementById('cmdk-list').innerHTML=results.slice(0,12).map((r,i)=>`
@@ -3544,6 +3683,64 @@ function cmdkKey(e) {
   else return;
   items.forEach((el,i)=>el.classList.toggle('sel',i===cmdkSel));
   e.preventDefault();
+}
+
+// ── RECENTS + HOME ──────────────────────────────────────────────────────────────
+function recordRecent(key){
+  try{
+    let r=JSON.parse(safeLocalStorageGet('ipmg_recent')||'[]'); if(!Array.isArray(r)) r=[];
+    r=[key,...r.filter(k=>k!==key)].slice(0,8);
+    safeLocalStorageSet('ipmg_recent',JSON.stringify(r));
+    if(document.getElementById('sec-home')?.classList.contains('active')) renderHomeRecents();
+  }catch(e){}
+}
+function getRecents(){
+  try{ const r=JSON.parse(safeLocalStorageGet('ipmg_recent')||'[]'); return Array.isArray(r)?r.filter(k=>providers[k]):[]; }catch(e){ return []; }
+}
+function homeSearch(){
+  const q=(document.getElementById('home-inp').value||'').trim();
+  const box=document.getElementById('home-results');
+  if(!box) return;
+  if(q.length<1){ box.innerHTML=''; box.classList.remove('open'); return; }
+  const results=buildGlobalResults(q,{includeSections:false});
+  box.classList.add('open');
+  if(!results.length){ box.innerHTML='<div class="home-result" style="color:var(--ink-3)">No matches</div>'; return; }
+  box.innerHTML=results.slice(0,10).map(r=>`
+    <div class="home-result" onclick="${r.action}">
+      <span class="home-result-icon r-${r.type}">${r.type==='prov'?USER_ICON:r.type==='office'?'🏢':r.type==='ins'?'◆':'→'}</span>
+      <span style="min-width:0;flex:1"><span class="home-result-label">${esc(r.label)}</span><span class="home-result-sub">${esc(r.sub)}</span></span>
+      <span class="cmdk-type-pill">${esc(r.tag)}</span>
+    </div>`).join('');
+}
+function renderHomeRecents(){
+  const wrap=document.getElementById('home-recent-wrap');
+  if(!wrap) return;
+  const recents=getRecents();
+  if(!recents.length){ wrap.style.display='none'; return; }
+  wrap.style.display='';
+  document.getElementById('home-recent').innerHTML=recents.map(k=>{
+    const p=providers[k]; const st=providerStatus(p);
+    const stop=new Set(['MD','NP','PMHNP','LCSW','DO','PhD','Dr.','Dr']);
+    const ini=(p.display||'?').split(' ').filter(w=>!stop.has(w)).slice(0,2).map(w=>w[0]||'').join('');
+    return `<div class="home-recent-card" onclick="openProviderFromSearch('${k.replace(/'/g,"\\'")}')">
+      <div class="av av-${p.type||'Provider'}">${esc(ini||'?')}</div>
+      <div style="min-width:0"><div class="home-recent-name">${esc(p.display||k)}</div><div class="card-sub"><span class="status-pill ${st.cls}">${st.label}</span></div></div>
+    </div>`;
+  }).join('');
+}
+function renderHome(){
+  const h=new Date().getHours();
+  const greet=h<12?'Good morning':h<18?'Good afternoon':'Good evening';
+  const gEl=document.getElementById('home-greeting'); if(gEl) gEl.textContent=greet;
+  // proactive data-health nudge
+  const nudge=document.getElementById('home-health-nudge');
+  if(nudge){
+    const a=getAudit(); const n=a.counts.error;
+    if(n>0){ nudge.style.display=''; nudge.querySelector('.home-nudge-text').textContent=`${n} record${n===1?'':'s'} need${n===1?'s':''} a fix in Data Health`; }
+    else nudge.style.display='none';
+  }
+  renderHomeRecents();
+  setTimeout(()=>document.getElementById('home-inp')?.focus(),60);
 }
 
 // ── TOAST ──────────────────────────────────────────────────────────────────────
