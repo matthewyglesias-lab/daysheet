@@ -289,6 +289,35 @@ body.theme-dark .sidebar{background:rgba(20,29,36,.72);}
 .ins-empty-state .chip-row{justify-content:center;max-width:580px;margin:0 auto;flex-wrap:wrap;}
 .ins-empty-state .chip{cursor:pointer;}
 .ins-provider-row .status-pill{margin-left:auto;flex-shrink:0;}
+/* shared rich search results (command palette + home) */
+.sr-group-label{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);padding:10px 12px 5px;}
+.sr-row{display:flex;align-items:center;gap:11px;padding:9px 12px;border-radius:12px;cursor:pointer;transition:background .12s;}
+.sr-row:hover,.sr-row.sel{background:var(--accent-soft);}
+.sr-av{width:34px;height:34px;border-radius:10px;font-size:.72rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;}
+.sr-icon{width:34px;height:34px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--rail);color:var(--ink-3);}
+.sr-icon.i-ins{background:var(--accent-soft);color:var(--accent);}
+.sr-icon.i-office{background:var(--violet-soft);color:var(--violet);}
+.sr-icon.i-nav{background:var(--rail);color:var(--ink-3);}
+.sr-main{flex:1;min-width:0;}
+.sr-name{font-size:.88rem;font-weight:650;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.sr-meta{font-size:.74rem;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
+.sr-row .status-pill{flex-shrink:0;}
+.sr-tag{flex-shrink:0;font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-3);background:var(--rail);border-radius:6px;padding:3px 7px;}
+.sr-empty{padding:22px 14px;text-align:center;color:var(--ink-3);font-size:.85rem;}
+/* custom autocomplete popup for payer / provider fields */
+.ac-pop{position:fixed;z-index:1200;background:var(--paper);border:1px solid var(--border);border-radius:14px;box-shadow:var(--sh-3);overflow:hidden;display:none;max-height:320px;overflow-y:auto;}
+.ac-pop.open{display:block;}
+.ac-item{display:flex;align-items:center;gap:10px;padding:9px 12px;cursor:pointer;border-bottom:1px solid var(--border);}
+.ac-item:last-child{border-bottom:none;}
+.ac-item:hover,.ac-item.sel{background:var(--accent-soft);}
+.ac-av{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.68rem;}
+.ac-icon{width:30px;height:30px;border-radius:9px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--accent-soft);color:var(--accent);font-size:.8rem;}
+.ac-main{flex:1;min-width:0;}
+.ac-name{font-size:.85rem;font-weight:650;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ac-meta{font-size:.72rem;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ac-item .status-pill{flex-shrink:0;}
+/* native select polish */
+.fld select,.ins-guide-field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237a95a8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m6 9 6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 11px center;padding-right:34px;cursor:pointer;}
 .card-chev{margin-left:auto;color:var(--ink-3);flex-shrink:0;transition:transform .3s var(--ease);}
 .card-chev.open{transform:rotate(180deg);}
 .card-inner{padding:16px 18px;}
@@ -1431,8 +1460,7 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
         <h3><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184"/></svg> Appointment Card</h3>
         <div class="fld"><label>Patient Name</label><input id="pt-name" placeholder="Jane Doe"></div>
         <div class="fld"><label>Provider</label>
-          <input id="pt-prov" list="prov-list" placeholder="Search provider…" oninput="apptProvSync()">
-          <datalist id="prov-list"></datalist>
+          <input id="pt-prov" placeholder="Search provider…" autocomplete="off" oninput="apptProvInput(this)" onkeydown="acKey(event)" onblur="setTimeout(acClose,150)">
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
           <div class="fld"><label>Date</label><input id="pt-date" type="date"></div>
@@ -1448,7 +1476,7 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
         <div class="appt-ins-bridge">
           <div class="appt-ins-bridge-title">Insurance check</div>
           <div class="appt-ins-bridge-copy">Optional, but helpful: send the payer/card wording into the Insurance section before scheduling, then bring the verification note back into this appointment note.</div>
-          <div class="fld"><label>Payer / Card Wording</label><input id="pt-payer" list="ins-profile-list" placeholder="IEHP, Blue Shield, Carelon, PrimeCare…" oninput="updateAppointmentInsuranceBridge()"><datalist id="ins-profile-list"></datalist></div>
+          <div class="fld"><label>Payer / Card Wording</label><input id="pt-payer" placeholder="IEHP, Blue Shield, Carelon, PrimeCare…" autocomplete="off" oninput="apptPayerInput(this)" onkeydown="acKey(event)" onblur="setTimeout(acClose,150)"></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
             <div class="fld"><label>County</label><select id="pt-ins-county" onchange="updateAppointmentInsuranceBridge()"><option value="">Unknown</option><option value="san_bernardino">San Bernardino</option><option value="riverside">Riverside</option><option value="orange">Orange</option><option value="los_angeles">Los Angeles</option><option value="lancaster_area">Lancaster / AV</option><option value="other">Other</option></select></div>
             <div class="fld"><label>Service</label><select id="pt-ins-service" onchange="updateAppointmentInsuranceBridge()"><option value="med_management">Med management</option><option value="therapy">Therapy</option><option value="testing">Testing</option><option value="tms">TMS</option><option value="spravato">Spravato</option><option value="iop_php">IOP/PHP</option><option value="substance_use">SUD</option></select></div>
@@ -2090,10 +2118,9 @@ function renderInsGuidePanel(){
   const countyOpts = Object.entries(INS_COUNTIES).map(([id,c])=>`<option value="${esc(id)}">${esc(c.label)}</option>`).join('');
   const planOpts = Object.entries(INS_PLAN_TYPES).map(([id,label])=>`<option value="${esc(id)}">${esc(label)}</option>`).join('');
   const serviceOpts = Object.entries(INS_SERVICE_TYPES).map(([id,label])=>`<option value="${esc(id)}">${esc(label)}</option>`).join('');
-  const payerOpts = Object.values(D.ins_profiles||{}).sort((a,b)=>profileDisplayName(a).localeCompare(profileDisplayName(b))).map(p=>`<option value="${esc(profileDisplayName(p))}"></option>`).join('');
   return `<div class="ins-navigator">
     <div class="ins-guide-grid">
-      <div class="ins-guide-field ins-guide-field-wide"><label>What the card or portal says</label><input id="ins-card-says" list="ins-profile-options" placeholder="IEHP, Blue Shield, Carelon, Optum, PrimeCare…" oninput="insRenderGuide()"><datalist id="ins-profile-options">${payerOpts}</datalist></div>
+      <div class="ins-guide-field ins-guide-field-wide"><label>What the card or portal says</label><input id="ins-card-says" autocomplete="off" placeholder="IEHP, Blue Shield, Carelon, Optum, PrimeCare…" oninput="insCardInput(this)" onkeydown="acKey(event)" onblur="setTimeout(acClose,150)"></div>
       <div class="ins-guide-field"><label>County</label><select id="ins-county" onchange="insRenderGuide()">${countyOpts}</select></div>
       <div class="ins-guide-field"><label>Service type</label><select id="ins-service-type" onchange="insRenderGuide()">${serviceOpts}</select></div>
       <div class="ins-guide-field"><label>Plan type <span style="font-weight:500;color:var(--ink-3)">(optional)</span></label><select id="ins-plan-type" onchange="insRenderGuide()">${planOpts}</select></div>
@@ -2341,16 +2368,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if(insHead) insHead.textContent = 'Insurance';
   const insSub = document.querySelector('#sec-ins .pg-head p');
   if(insSub) insSub.textContent = `Enter what the patient has, get a plain-English scheduling read and matching providers`;
-  // fill provider datalist
-  const dl = document.getElementById('prov-list');
-  Object.values(providers).forEach(p => {
-    const o = document.createElement('option'); o.value = p.display||''; dl.appendChild(o);
-  });
-  const idl = document.getElementById('ins-profile-list');
-  if(idl) Object.values((D||{}).ins_profiles||{}).sort((a,b)=>profileDisplayName(a).localeCompare(profileDisplayName(b))).forEach(p => {
-    const o = document.createElement('option'); o.value = profileDisplayName(p); idl.appendChild(o);
-    (p.aliases||[]).slice(0,4).forEach(alias=>{ const a=document.createElement('option'); a.value=alias; idl.appendChild(a); });
-  });
   updateAppointmentInsuranceBridge();
   // fill loc select
   const ls = document.getElementById('pt-loc');
@@ -3725,60 +3742,145 @@ function openProviderFromSearch(key){
     setTimeout(()=>{ const card=document.getElementById('pc-'+key); if(card){ const body=document.getElementById('pb-'+key); if(body&&!body.classList.contains('open')) togglePC(key); card.scrollIntoView({behavior:'smooth',block:'center'}); } },60);
   },80);
 }
+function _provInitials(p){
+  const stop=new Set(['MD','NP','PMHNP','LCSW','DO','PhD','Dr.','Dr']);
+  return (p.display||'?').split(' ').filter(w=>!stop.has(w)).slice(0,2).map(w=>w[0]||'').join('')||'?';
+}
 function buildGlobalResults(q, opts){
   q=(q||'').toLowerCase().trim();
   opts=opts||{};
   const results=[];
   if(opts.includeSections!==false){
+    const NAVDESC={home:'Launchpad and search',find:'Schedules, insurance, contacts',ins:'Turn a card into a scheduling answer',off:'Addresses, phones, hours',appt:'Cards and reminder scripts',health:'Records worth double-checking'};
     [['Home','home'],['Providers','find'],['Insurance','ins'],['Offices','off'],['Appointments','appt'],['Data Health','health']].forEach(([l,s])=>{
-      if(!q||l.toLowerCase().includes(q)) results.push({type:'nav',label:l,sub:'Portal section',tag:'Section',action:`go('${s}')`});
+      if(!q||l.toLowerCase().includes(q)) results.push({type:'nav',label:l,meta:NAVDESC[s]||'Portal section',tag:'Go to',action:`go('${s}')`});
     });
   }
   if(q.length>1){
     Object.entries(providers).forEach(([k,p])=>{
-      const profileText=(p.insuranceProfileIds||[]).map(id=>{const prof=insProfile(id)||{}; return [profileDisplayName(prof), prof.name, prof.canonicalName, ...(prof.aliases||[])].join(' ')}).join(' ').toLowerCase();
-      const locText=Object.keys(p.locations||{}).join(' ').toLowerCase();
-      const payerMatch=profileText.includes(q), locMatch=locText.includes(q);
-      if((p.display||'').toLowerCase().includes(q) || payerMatch || locMatch){
+      // Match providers by name or location; payer lookups belong to the Insurance section.
+      const nameMatch=(p.display||'').toLowerCase().includes(q);
+      const locText=Object.keys(p.locations||{}).join(' ').replace(/_/g,' ').toLowerCase();
+      const locMatch=locText.includes(q);
+      if(nameMatch || locMatch){
         const st=providerStatus(p);
-        const loc0=Object.keys(p.locations||{})[0]; const locL=loc0?loc0.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase()):'';
-        results.push({type:'prov',label:p.display||k,sub:`${p.type||'Provider'} · ${st.label}${payerMatch?' · payer match':locL?' · '+locL:''}`,tag:'Provider',
+        const locs=Object.keys(p.locations||{}).slice(0,2).map(l=>l.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())).join(', ');
+        const nPlans=(p.insuranceProfileIds||[]).length;
+        const meta=[p.type||'Provider', locs||null, nPlans?nPlans+' plans':null].filter(Boolean).join(' · ');
+        results.push({type:'prov',label:p.display||k,meta,tag:'Provider',ini:_provInitials(p),avType:p.type||'Provider',statusCls:st.cls,statusLabel:st.label,nameMatch,
           action:`openProviderFromSearch('${k.replace(/'/g,"\\'")}')`});
       }
     });
     Object.values((D||{}).ins_profiles||{}).forEach(p=>{
       const text=[p.id, profileDisplayName(p), p.name, p.canonicalName, p.lineOfBusiness, p.medicalCarrier, p.behavioralAdmin, p.networkLayer, ...(p.aliases||[]), ...(p.tags||[])].join(' ').toLowerCase();
-      if(text.includes(q)) results.push({type:'ins',label:profileDisplayName(p),sub:`${insRoleLabel(p)} · ${Number(p.providerCount||0)} providers`,tag:'Payer',
+      if(text.includes(q)) results.push({type:'ins',label:insShortName(p),meta:`${insRoleLabel(p)} · ${Number(p.providerCount||0)} providers`,tag:'Payer',
         action:`go('ins');setTimeout(()=>{insGuideSelectProfile('${(p.id||'').replace(/'/g,"\\'")}');},90)`});
     });
     Object.entries(offices).forEach(([k,o])=>{
       const text=[k,o.name,o.addr,o.address,o.phone,o.hours,o.manager].join(' ').toLowerCase();
-      if(text.includes(q)) results.push({type:'office',label:o.name||k,sub:o.phone||o.addr||'Office location',tag:'Office',action:`go('off');setTimeout(()=>openOffModal('${k.replace(/'/g,"\\'")}'),90)`});
+      if(text.includes(q)){
+        const meta=[o.phone||null, o.addr?o.addr.split(',')[0]:null].filter(Boolean).join(' · ')||'Office location';
+        results.push({type:'office',label:o.name||k,meta,tag:'Office',action:`go('off');setTimeout(()=>openOffModal('${k.replace(/'/g,"\\'")}'),90)`});
+      }
     });
   }
   return results;
+}
+function _searchRowHtml(r,i,sel){
+  let left;
+  if(r.type==='prov') left=`<div class="sr-av av av-${esc(r.avType||'Provider')}">${esc(r.ini||'?')}</div>`;
+  else if(r.type==='ins') left=`<div class="sr-icon i-ins">◆</div>`;
+  else if(r.type==='office') left=`<div class="sr-icon i-office">🏢</div>`;
+  else left=`<div class="sr-icon i-nav">→</div>`;
+  const right=r.type==='prov'?`<span class="status-pill ${r.statusCls}">${esc(r.statusLabel)}</span>`:`<span class="sr-tag">${esc(r.tag||'')}</span>`;
+  return `<div class="sr-row${sel?' sel':''}" data-i="${i}" onclick="${r.action};document.getElementById('cmdk').classList.remove('open')">${left}<div class="sr-main"><div class="sr-name">${esc(r.label)}</div><div class="sr-meta">${esc(r.meta||'')}</div></div>${right}</div>`;
+}
+function renderSearchResults(results, selFirst){
+  const order=[['prov','Providers',8],['ins','Insurance plans',6],['office','Offices',6],['nav','Go to',8]];
+  let html=''; let idx=0;
+  order.forEach(([type,label,lim])=>{
+    const rows=results.filter(r=>r.type===type);
+    if(!rows.length) return;
+    html+=`<div class="sr-group-label">${label}${rows.length>lim?' · '+rows.length:''}</div>`;
+    rows.slice(0,lim).forEach(r=>{ html+=_searchRowHtml(r,idx,selFirst&&idx===0); idx++; });
+  });
+  return html;
 }
 function cmdkSearch() {
   const q=(document.getElementById('cmdk-inp').value||'').toLowerCase().trim();
   const results=buildGlobalResults(q);
   cmdkSel=0;
-  if(!results.length){document.getElementById('cmdk-list').innerHTML='<div class="cmdk-item"><span class="cmdk-item-label" style="color:var(--ink-3)">No results</span></div>';return;}
-  document.getElementById('cmdk-list').innerHTML=results.slice(0,12).map((r,i)=>`
-    <div class="cmdk-item${i===0?' sel':''}" onclick="${r.action};document.getElementById('cmdk').classList.remove('open')">
-      <span class="cmdk-item-icon">${r.type==='prov'?USER_ICON:NAV_ICON}</span>
-      <span style="min-width:0"><div class="cmdk-item-label">${esc(r.label)}</div><div class="cmdk-item-sub">${esc(r.sub)}</div></span>
-      <span class="cmdk-type-pill">${esc(r.tag||r.type)}</span>
-    </div>`).join('');
+  const list=document.getElementById('cmdk-list');
+  if(!results.length){ list.innerHTML='<div class="sr-empty">No matches — try a name, insurance plan, or office.</div>'; return; }
+  list.innerHTML=renderSearchResults(results, true);
 }
 function cmdkKey(e) {
-  const items=document.querySelectorAll('.cmdk-item');
+  const items=document.querySelectorAll('#cmdk-list .sr-row');
   if(e.key==='ArrowDown') cmdkSel=Math.min(cmdkSel+1,items.length-1);
   else if(e.key==='ArrowUp') cmdkSel=Math.max(cmdkSel-1,0);
   else if(e.key==='Enter') {items[cmdkSel]?.click();return;}
   else return;
   items.forEach((el,i)=>el.classList.toggle('sel',i===cmdkSel));
+  if(items[cmdkSel]) items[cmdkSel].scrollIntoView({block:'nearest'});
   e.preventDefault();
 }
+
+// ── RICH AUTOCOMPLETE (payer + provider fields) ─────────────────────────────────
+let _acPop=null,_acItems=[],_acSel=-1;
+function _acEnsure(){ if(!_acPop){ _acPop=document.createElement('div'); _acPop.className='ac-pop'; document.body.appendChild(_acPop); _acPop.addEventListener('mousedown',e=>e.preventDefault()); window.addEventListener('scroll',()=>acClose(),true); } return _acPop; }
+function acClose(){ if(_acPop){ _acPop.classList.remove('open'); _acPop.innerHTML=''; } _acItems=[]; _acSel=-1; }
+function acOpen(input, items){
+  _acItems=items; _acSel=-1;
+  const p=_acEnsure();
+  if(!items.length){ acClose(); return; }
+  const r=input.getBoundingClientRect();
+  p.style.left=r.left+'px'; p.style.top=(r.bottom+5)+'px'; p.style.width=r.width+'px';
+  p.innerHTML=items.map((it,i)=>`<div class="ac-item" data-i="${i}" onmousedown="acPick(${i})">${it.html}</div>`).join('');
+  p.classList.add('open');
+}
+function acPick(i){ const it=_acItems[i]; if(it&&it.onPick) it.onPick(); acClose(); }
+function acKey(e){
+  if(!_acPop||!_acPop.classList.contains('open')) return false;
+  const items=_acPop.querySelectorAll('.ac-item');
+  if(e.key==='ArrowDown'){ _acSel=Math.min(_acSel+1,items.length-1); }
+  else if(e.key==='ArrowUp'){ _acSel=Math.max(_acSel-1,0); }
+  else if(e.key==='Enter'){ if(_acSel>=0){ acPick(_acSel); e.preventDefault(); return true; } return false; }
+  else if(e.key==='Escape'){ acClose(); return true; }
+  else return false;
+  items.forEach((el,idx)=>el.classList.toggle('sel',idx===_acSel));
+  if(items[_acSel]) items[_acSel].scrollIntoView({block:'nearest'});
+  e.preventDefault(); return true;
+}
+function _acPayerMatches(q){
+  q=(q||'').toLowerCase().trim(); if(q.length<1) return [];
+  const scored=[];
+  Object.values(D.ins_profiles||{}).forEach(p=>{
+    const hay=[insShortName(p),profileDisplayName(p),p.name,p.canonicalName,(p.aliases||[]).join(' '),(p.tags||[]).join(' ')].join(' ').toLowerCase();
+    const idx=hay.indexOf(q); if(idx<0) return;
+    scored.push({p,idx,starts:insShortName(p).toLowerCase().startsWith(q)?1:0});
+  });
+  scored.sort((a,b)=>(b.starts-a.starts)||(a.idx-b.idx)||(Number(b.p.providerCount||0)-Number(a.p.providerCount||0)));
+  return scored.slice(0,8).map(({p})=>({p,
+    html:`<div class="ac-icon">◆</div><div class="ac-main"><div class="ac-name">${esc(insShortName(p))}</div><div class="ac-meta">${esc(insRoleLabel(p))} · ${Number(p.providerCount||0)} providers</div></div>`}));
+}
+function _acProviderMatches(q){
+  q=(q||'').toLowerCase().trim(); if(q.length<1) return [];
+  const out=[];
+  for(const [k,p] of Object.entries(providers)){
+    if(p.status==='inactive') continue;
+    if((p.display||'').toLowerCase().includes(q)) out.push([k,p]);
+  }
+  out.sort((a,b)=>(a[1].display||'').localeCompare(b[1].display||''));
+  return out.slice(0,8).map(([k,p])=>{
+    const st=providerStatus(p);
+    const locs=Object.keys(p.locations||{}).slice(0,2).map(l=>l.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())).join(', ');
+    return {display:p.display||k,
+      html:`<div class="ac-av av av-${esc(p.type||'Provider')}">${esc(_provInitials(p))}</div><div class="ac-main"><div class="ac-name">${esc(p.display||k)}</div><div class="ac-meta">${esc(p.type||'Provider')}${locs?' · '+esc(locs):''}</div></div><span class="status-pill ${st.cls}">${esc(st.label)}</span>`};
+  });
+}
+function insCardInput(el){ insRenderGuide(); acOpen(el,_acPayerMatches(el.value).map(m=>({html:m.html,onPick:()=>{ el.value=insShortName(m.p); insRenderGuide(); }}))); }
+function apptPayerInput(el){ updateAppointmentInsuranceBridge(); acOpen(el,_acPayerMatches(el.value).map(m=>({html:m.html,onPick:()=>{ el.value=insShortName(m.p); updateAppointmentInsuranceBridge(); }}))); }
+function apptProvInput(el){ apptProvSync(); acOpen(el,_acProviderMatches(el.value).map(m=>({html:m.html,onPick:()=>{ el.value=m.display; const rm=document.getElementById('rm-prov'); if(rm) rm.value=m.display; apptProvSync(); }}))); }
 
 // ── RECENTS + HOME ──────────────────────────────────────────────────────────────
 function recordRecent(key){
@@ -3799,13 +3901,8 @@ function homeSearch(){
   if(q.length<1){ box.innerHTML=''; box.classList.remove('open'); return; }
   const results=buildGlobalResults(q,{includeSections:false});
   box.classList.add('open');
-  if(!results.length){ box.innerHTML='<div class="home-result" style="color:var(--ink-3)">No matches</div>'; return; }
-  box.innerHTML=results.slice(0,10).map(r=>`
-    <div class="home-result" onclick="${r.action}">
-      <span class="home-result-icon r-${r.type}">${r.type==='prov'?USER_ICON:r.type==='office'?'🏢':r.type==='ins'?'◆':'→'}</span>
-      <span style="min-width:0;flex:1"><span class="home-result-label">${esc(r.label)}</span><span class="home-result-sub">${esc(r.sub)}</span></span>
-      <span class="cmdk-type-pill">${esc(r.tag)}</span>
-    </div>`).join('');
+  if(!results.length){ box.innerHTML='<div class="sr-empty">No matches — try a name, insurance plan, or office.</div>'; return; }
+  box.innerHTML=`<div class="sr-list">${renderSearchResults(results, false)}</div>`;
 }
 function renderHomeRecents(){
   const wrap=document.getElementById('home-recent-wrap');
