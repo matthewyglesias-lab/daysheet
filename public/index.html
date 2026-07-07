@@ -667,8 +667,7 @@ body.theme-dark .sidebar{background:rgba(20,29,36,.72);}
 .office-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;}
 .office-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 18px;}
 .office-kpi{position:relative;background:rgba(255,255,255,.84);border:1px solid rgba(21,35,46,.075);border-radius:18px;padding:15px 16px;box-shadow:0 8px 28px rgba(21,35,46,.055);overflow:hidden;}
-.office-kpi::after{content:'';position:absolute;right:-22px;top:-28px;width:92px;height:92px;border-radius:999px;background:var(--accent-soft);opacity:.75;}
-.office-kpi:nth-child(2)::after{background:var(--brand-soft)}.office-kpi:nth-child(3)::after{background:var(--violet-soft)}.office-kpi:nth-child(4)::after{background:var(--warn-soft)}
+.office-kpi::after{content:none;}
 .office-kpi-num{position:relative;z-index:1;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.45rem;color:var(--ink);line-height:1.05;}
 .office-kpi-lbl{position:relative;z-index:1;font-size:.68rem;font-weight:800;letter-spacing:.075em;text-transform:uppercase;color:var(--ink-3);margin-top:5px;}
 .office-guide-card{background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(255,255,255,.72));border:1px solid rgba(21,35,46,.075);border-radius:20px;box-shadow:0 10px 30px rgba(21,35,46,.06);padding:16px 18px;margin-bottom:18px;}
@@ -1118,7 +1117,7 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .ins-quick-label{font-size:.67rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-right:2px;}
 .ins-quick-start .btn{font-size:.75rem;padding:7px 11px;border-radius:999px;}
 .ins-mode-row{margin:12px 24px 0;}
-.ins-guide-grid{grid-template-columns:1fr 1fr 1.35fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
+.ins-guide-grid{grid-template-columns:1.7fr 1fr 1fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
 .ins-guide-field label{font-size:.64rem;}
 .ins-guide-field input,.ins-guide-field select{min-height:39px;}
 .ins-result{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:14px;margin-top:0;}
@@ -1254,19 +1253,16 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
 <aside class="sidebar">
   <span class="nav-section-label">Main</span>
   <button class="nav-tab active" onclick="go('find')" id="ntab-find">
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z"/></svg><span>Find a Provider</span>
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0z"/></svg><span>Providers</span>
   </button>
-  <button class="nav-tab" onclick="go('appt')" id="ntab-appt">
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg><span>Appointments</span>
-  </button>
-  <button class="nav-tab" onclick="go('dir')" id="ntab-dir">
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0z"/></svg><span>Directory</span>
+  <button class="nav-tab" onclick="go('ins')" id="ntab-ins">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg><span>Insurance</span>
   </button>
   <button class="nav-tab" onclick="go('off')" id="ntab-off">
     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"/></svg><span>Offices</span>
   </button>
-  <button class="nav-tab" onclick="go('ins')" id="ntab-ins">
-    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg><span>Insurance</span>
+  <button class="nav-tab" onclick="go('appt')" id="ntab-appt">
+    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/></svg><span>Appointments</span>
   </button>
   <button class="nav-tab" onclick="go('health')" id="ntab-health">
     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12h4.5l2.25-6.75 4.5 13.5 2.25-6.75H21"/></svg><span>Data Health</span><span class="tag tag-warn" id="health-nav-badge" style="display:none;margin-left:auto"></span>
@@ -1275,20 +1271,15 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
   <a class="nav-tab" href="/daylog" style="text-decoration:none">
     <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/></svg><span>Day Log (Check-in)</span>
   </a>
-  <div class="sidebar-footer">IPMG v4.5 · Data Health · 2026-07-05</div>
+  <div class="sidebar-footer">IPMG v4.6 · Streamlined · 2026-07-07</div>
 </aside>
 
   <main class="main-content">
     
 <section id="sec-find" class="section active">
   <div class="pg-head">
-    <h1>Find a Provider</h1>
-    <p>Search by name, specialty, insurance, or location</p>
-  </div>
-  <div class="stats" id="home-stats">
-    <div class="stat"><div class="stat-num" id="st-prov">0</div><div class="stat-label">Providers</div></div>
-    <div class="stat"><div class="stat-num" id="st-loc">0</div><div class="stat-label">Locations</div></div>
-    <div class="stat"><div class="stat-num" id="st-ins">0</div><div class="stat-label">Insurance Plans</div></div>
+    <h1>Providers</h1>
+    <p id="find-subtitle">Search by name, specialty, insurance, or location</p>
   </div>
   <div class="search-wrap">
     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z"/></svg>
@@ -1305,6 +1296,7 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
     <button class="chip" onclick="filterChip(this,'spanish')" data-val="spanish">Spanish</button>
     <button class="chip" onclick="filterChip(this,'new')" data-val="new">Accepting New</button>
   </div>
+  <div class="result-count" id="find-count"></div>
   <div id="find-results" class="grid grid-2 stagger"></div>
 </section>
     
@@ -1334,14 +1326,14 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
           </select>
         </div>
         <div class="appt-ins-bridge">
-          <div class="appt-ins-bridge-title">Insurance context bridge</div>
-          <div class="appt-ins-bridge-copy">Optional, but helpful: send the payer/card wording into the BH Payer Navigator before scheduling, then bring the verification note back into this appointment note.</div>
+          <div class="appt-ins-bridge-title">Insurance check</div>
+          <div class="appt-ins-bridge-copy">Optional, but helpful: send the payer/card wording into the Insurance section before scheduling, then bring the verification note back into this appointment note.</div>
           <div class="fld"><label>Payer / Card Wording</label><input id="pt-payer" list="ins-profile-list" placeholder="IEHP, Blue Shield, Carelon, PrimeCare…" oninput="updateAppointmentInsuranceBridge()"><datalist id="ins-profile-list"></datalist></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
             <div class="fld"><label>County</label><select id="pt-ins-county" onchange="updateAppointmentInsuranceBridge()"><option value="">Unknown</option><option value="san_bernardino">San Bernardino</option><option value="riverside">Riverside</option><option value="orange">Orange</option><option value="los_angeles">Los Angeles</option><option value="lancaster_area">Lancaster / AV</option><option value="other">Other</option></select></div>
             <div class="fld"><label>Service</label><select id="pt-ins-service" onchange="updateAppointmentInsuranceBridge()"><option value="med_management">Med management</option><option value="therapy">Therapy</option><option value="testing">Testing</option><option value="tms">TMS</option><option value="spravato">Spravato</option><option value="iop_php">IOP/PHP</option><option value="substance_use">SUD</option></select></div>
           </div>
-          <button class="btn btn-ghost" onclick="openInsFromAppointment()" style="width:100%;margin-top:2px">Open in BH Payer Navigator</button>
+          <button class="btn btn-ghost" onclick="openInsFromAppointment()" style="width:100%;margin-top:2px">Open in Insurance</button>
           <div class="appt-ins-preview" id="appt-ins-preview">No payer context loaded yet.</div>
         </div>
         <div class="fld"><label>Notes</label><textarea id="pt-notes" placeholder="Bring ID and insurance card…"></textarea></div>
@@ -1379,45 +1371,15 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
   </div>
 </section>
     
-<section id="sec-dir" class="section">
-  <div class="pg-head">
-    <h1>Provider Directory</h1>
-    <p>All providers with schedules and credentials</p>
-  </div>
-  <div class="search-wrap">
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z"/></svg>
-    <input class="search-inp" id="dir-inp" placeholder="Search provider name…" oninput="runDir()" autocomplete="off">
-  </div>
-  <div class="filter-row">
-    <span class="filter-label">Type:</span>
-    <button class="chip" onclick="dirChip(this,'')" data-val="">All</button>
-    <button class="chip" onclick="dirChip(this,'MD')" data-val="MD">MD</button>
-    <button class="chip" onclick="dirChip(this,'NP')" data-val="NP">NP</button>
-    <button class="chip" onclick="dirChip(this,'PMHNP')" data-val="PMHNP">PMHNP</button>
-    <button class="chip" onclick="dirChip(this,'LCSW')" data-val="LCSW">LCSW</button>
-    <button class="chip" onclick="dirChip(this,'DO')" data-val="DO">DO</button>
-  </div>
-  <div id="dir-results" class="grid grid-2 stagger"></div>
-</section>
-    
 <section id="sec-off" class="section">
   <div class="pg-head office-head">
     <div>
-      <h1>Office Hub</h1>
+      <h1>Offices</h1>
       <p>Locations, support teams, provider schedules, and appointment-ready office details</p>
     </div>
   </div>
 
   <div id="office-overview" class="office-overview"></div>
-
-  <div class="office-guide-card">
-    <div class="office-guide-title">How to use this section</div>
-    <div class="office-guide-grid">
-      <div><b>1. Find the location</b><span>Search by city, address, phone, manager, or staff name.</span></div>
-      <div><b>2. Check office type</b><span>Patient-care, telehealth/support, admin team, or legacy/closed location.</span></div>
-      <div><b>3. Open details</b><span>Use the modal for contact info, provider days, team members, and appointment notes.</span></div>
-    </div>
-  </div>
 
   <div class="office-toolbar">
     <div class="search-wrap office-search-wrap">
@@ -1442,8 +1404,8 @@ body.theme-dark .health-details{background:rgba(26,36,45,.86);}
     
 <section id="sec-ins" class="section">
   <div class="pg-head">
-    <h1>Insurance Guide</h1>
-    <p>Simplified BH payer workflow linked to provider profiles and appointment notes</p>
+    <h1>Insurance</h1>
+    <p>Enter what the patient has, get a plain-English scheduling read and matching providers</p>
   </div>
   <div id="ins-accordions"></div>
 </section>
@@ -1827,19 +1789,14 @@ function providerPayerInsightHtml(p){
   const ids = p.insuranceProfileIds || [];
   if(!ids.length) return '';
   const profs = ids.map(id=>insProfile(id)).filter(Boolean);
-  const countByCat = profs.reduce((acc,prof)=>{ const cat=prof.category||'other'; acc[cat]=(acc[cat]||0)+1; return acc; },{});
   const flags = [];
-  if(profs.some(x=>x.category==='medi-cal')) flags.push('Medi-Cal county logic');
-  if(profs.some(x=>x.category==='ipa')) flags.push('IPA / medical group layers');
-  if(profs.some(x=>x.category==='carveout')) flags.push('BH carve-outs');
   if(profs.some(x=>(x.id||'').includes('blue_shield'))) flags.push('Blue Shield routing caution');
   if(profs.some(x=>(x.id||'').includes('magellan'))) flags.push('Magellan transition caution');
-  const counts = Object.entries(countByCat).sort((a,b)=>b[1]-a[1]).slice(0,5).map(([cat,count])=>`<span class="tag tag-accent">${esc(cat.replace(/-/g,' '))}: ${count}</span>`).join('');
-  const flagHtml = flags.slice(0,5).map(f=>`<span class="tag tag-warn">${esc(f)}</span>`).join('');
+  if(profs.some(x=>x.category==='ipa')) flags.push('IPA / medical group layers');
+  const flagHtml = flags.slice(0,4).map(f=>`<span class="tag tag-warn">${esc(f)}</span>`).join('');
   const first = profs[0];
-  const guideBtn = first ? `<button class="btn btn-primary" style="font-size:.72rem;padding:5px 10px" onclick="openPayerProfileFromProvider('${esc(first.id)}', event)">Start payer workflow</button>` : '';
-  const apptBtn = first ? `<button class="btn btn-ghost" style="font-size:.72rem;padding:5px 10px" onclick="openPayerProfileFromProvider('${esc(first.id)}', event); setTimeout(loadInsContextIntoAppointment,180)">Use for appointment</button>` : '';
-  return `<div class="ins-provider-insight"><div class="ins-provider-insight-title">Payer context follows this provider</div><p>This provider is linked to ${ids.length} roster payer profile${ids.length===1?'':'s'}. Payer chips below now act as bridges: open the BH route, find matching providers, or pass the verification note into appointment tools.</p><div class="chip-row">${counts}${flagHtml}</div>${first?`<div class="ins-tiny-actions">${guideBtn}${apptBtn}</div>`:''}</div>`;
+  const guideBtn = first ? `<button class="btn btn-ghost" style="font-size:.72rem;padding:5px 10px" onclick="openPayerProfileFromProvider('${esc(first.id)}', event)">Check insurance</button>` : '';
+  return `<div class="ins-provider-insight"><p style="margin:0 0 6px">Linked to ${ids.length} payer profile${ids.length===1?'':'s'}. Tap any plan below to open the Insurance check.</p>${flagHtml?`<div class="chip-row">${flagHtml}</div>`:''}${first?`<div class="ins-tiny-actions">${guideBtn}</div>`:''}</div>`;
 }
 
 function insMapHtml(route){
@@ -1988,41 +1945,17 @@ function insGuideSelectProfile(id){
   insRenderGuide();
   const result = document.getElementById('ins-guide-result'); if(result) result.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-function insSetMode(mode){
-  document.querySelectorAll('.ins-mode-tab').forEach(btn=>btn.classList.toggle('active', btn.dataset.mode===mode));
-  const target = mode==='search' ? document.getElementById('ins-library-details') : mode==='providers' ? document.getElementById('ins-before-scheduling') : document.getElementById('ins-guide-result');
-  if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
-  if(mode==='search'){ const d=document.getElementById('ins-library-details'); if(d) d.open=true; setTimeout(()=>document.getElementById('ins-inp')?.focus(), 120); }
-}
-function insApplyPreset(planType, county, payerTerm, serviceType){
-  const plan = document.getElementById('ins-plan-type');
-  const countyEl = document.getElementById('ins-county');
-  const card = document.getElementById('ins-card-says');
-  const service = document.getElementById('ins-service-type');
-  if(plan) plan.value = planType || '';
-  if(countyEl) countyEl.value = county || '';
-  if(card) card.value = payerTerm || '';
-  if(service) service.value = serviceType || '';
-  insRenderGuide();
-  insSetMode('guide');
-}
 function renderInsGuidePanel(){
   const countyOpts = Object.entries(INS_COUNTIES).map(([id,c])=>`<option value="${esc(id)}">${esc(c.label)}</option>`).join('');
   const planOpts = Object.entries(INS_PLAN_TYPES).map(([id,label])=>`<option value="${esc(id)}">${esc(label)}</option>`).join('');
   const serviceOpts = Object.entries(INS_SERVICE_TYPES).map(([id,label])=>`<option value="${esc(id)}">${esc(label)}</option>`).join('');
   const payerOpts = Object.values(D.ins_profiles||{}).sort((a,b)=>profileDisplayName(a).localeCompare(profileDisplayName(b))).map(p=>`<option value="${esc(profileDisplayName(p))}"></option>`).join('');
   return `<div class="ins-navigator">
-    <div class="ins-nav-hero">
-      <div class="ins-nav-title"><div class="ins-nav-eyebrow">Behavioral health insurance guide</div><h2>Start with the card, then verify the route.</h2><p>A simpler staff flow: enter what the patient has, identify the likely behavioral health route, then use the roster match and Tebra note. The payer library is still here, but tucked below as reference.</p></div>
-      <div class="ins-nav-status"><span class="tag tag-brand">Simple guide</span><span class="tag tag-accent">Roster-linked</span></div>
-    </div>
-    <div class="ins-quick-start"><span class="ins-quick-label">Common starts</span><button class="btn btn-ghost" type="button" onclick="insApplyPreset('', '', '', 'med_management')">Card first</button><button class="btn btn-ghost" type="button" onclick="insApplyPreset('medi-cal', 'san_bernardino', 'IEHP', 'med_management')">IEHP / Medi-Cal</button><button class="btn btn-ghost" type="button" onclick="insApplyPreset('ma', '', '', 'therapy')">Medicare Advantage</button><button class="btn btn-ghost" type="button" onclick="insApplyPreset('ipa', '', 'PrimeCare', 'testing')">IPA / medical group</button></div>
-    <div class="ins-mode-row"><button class="ins-mode-tab active" data-mode="guide" type="button" onclick="insSetMode('guide')">Guide</button><button class="ins-mode-tab" data-mode="search" type="button" onclick="insSetMode('search')">Payer Library</button><button class="ins-mode-tab" data-mode="providers" type="button" onclick="insSetMode('providers')">Roster Match</button></div>
     <div class="ins-guide-grid">
-      <div class="ins-guide-field"><label>Plan type</label><select id="ins-plan-type" onchange="insRenderGuide()">${planOpts}</select></div>
+      <div class="ins-guide-field ins-guide-field-wide"><label>What the card or portal says</label><input id="ins-card-says" list="ins-profile-options" placeholder="IEHP, Blue Shield, Carelon, Optum, PrimeCare…" oninput="insRenderGuide()"><datalist id="ins-profile-options">${payerOpts}</datalist></div>
       <div class="ins-guide-field"><label>County</label><select id="ins-county" onchange="insRenderGuide()">${countyOpts}</select></div>
-      <div class="ins-guide-field"><label>Card / portal says</label><input id="ins-card-says" list="ins-profile-options" placeholder="IEHP, Blue Shield, Carelon, Optum…" oninput="insRenderGuide()"><datalist id="ins-profile-options">${payerOpts}</datalist></div>
       <div class="ins-guide-field"><label>Service type</label><select id="ins-service-type" onchange="insRenderGuide()">${serviceOpts}</select></div>
+      <div class="ins-guide-field"><label>Plan type <span style="font-weight:500;color:var(--ink-3)">(optional)</span></label><select id="ins-plan-type" onchange="insRenderGuide()">${planOpts}</select></div>
     </div>
     <div id="ins-guide-result"></div>
   </div>`;
@@ -2179,13 +2112,12 @@ function updateHealthNavBadge(){
 }
 
 function jumpToHealthProvider(key){
-  go('dir');
-  dirFilter='';
-  document.querySelectorAll('#sec-dir .chip').forEach(c=>c.classList.remove('active'));
-  const allChip=document.querySelector('#sec-dir .chip[data-val=""]'); if(allChip) allChip.classList.add('active');
-  const inp=document.getElementById('dir-inp');
+  go('find');
+  findFilter = {type:'', spanish:false, acceptingNew:false};
+  document.querySelectorAll('#sec-find .chip').forEach(c=>c.classList.remove('active'));
+  const inp=document.getElementById('find-inp');
   inp.value=(providers[key]&&providers[key].display)||key;
-  runDir();
+  runFind();
   setTimeout(()=>{
     const card=document.getElementById('pc-'+key);
     if(card){ card.scrollIntoView({behavior:'smooth',block:'center'}); const body=document.getElementById('pb-'+key); if(body && !body.classList.contains('open')) togglePC(key); }
@@ -2239,7 +2171,6 @@ function go(sec) {
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
   document.getElementById('sec-'+sec).classList.add('active');
   document.getElementById('ntab-'+sec).classList.add('active');
-  if(sec==='dir' && !document.getElementById('dir-results').children.length) runDir();
   if(sec==='find' && !document.getElementById('find-results').children.length) runFind();
   if(sec==='health') renderDataHealth();
 }
@@ -2257,29 +2188,17 @@ if(safeLocalStorageGet('theme')==='dark') {
   document.body.classList.add('theme-dark');
 }
 
-// ── STAT COUNTER ──────────────────────────────────────────────────────────────
-function countUp(el, target, dur=1400) {
-  const t0 = performance.now();
-  (function step(now) {
-    const p = Math.min((now-t0)/dur,1), ease = 1-Math.pow(1-p,3);
-    el.textContent = Math.round(ease*target);
-    if(p<1) requestAnimationFrame(step);
-  })(t0);
-}
 document.addEventListener('DOMContentLoaded', () => {
-  countUp(document.getElementById('st-prov'), Object.keys(providers).length);
-  countUp(document.getElementById('st-loc'),  Object.keys(offices).length);
-  countUp(document.getElementById('st-ins'),  insRef.length);
   renderOfficeGrid();
   renderInsuranceAccordions();
-  const dirSub = document.querySelector('#sec-dir .pg-head p');
-  if(dirSub) dirSub.textContent = `All ${Object.keys(providers).length} providers with schedules and credentials`;
+  const findSub = document.getElementById('find-subtitle');
+  if(findSub) findSub.textContent = `All ${Object.keys(providers).length} providers — search by name, specialty, insurance, or location`;
   const offSub = document.querySelector('#sec-off .pg-head p');
-  if(offSub) offSub.textContent = `Organized office hub · ${Object.keys(offices).length} records · grouped by care location, region, support team, and legacy status`;
+  if(offSub) offSub.textContent = `${Object.keys(offices).length} office records — search by city, address, phone, manager, or staff`;
   const insHead = document.querySelector('#sec-ins .pg-head h1');
-  if(insHead) insHead.textContent = 'Insurance Guide';
+  if(insHead) insHead.textContent = 'Insurance';
   const insSub = document.querySelector('#sec-ins .pg-head p');
-  if(insSub) insSub.textContent = `Simplified BH payer workflow · ${Object.keys((D||{}).ins_profiles||{}).length} payer profiles · linked to providers, offices, and appointment notes`;
+  if(insSub) insSub.textContent = `Enter what the patient has, get a plain-English scheduling read and matching providers`;
   // fill provider datalist
   const dl = document.getElementById('prov-list');
   Object.values(providers).forEach(p => {
@@ -2351,12 +2270,17 @@ function runFind() {
     }
     matches.push({key,p,score});
   }
-  matches.sort((a,b)=>b.score-a.score||(a.p.display||'').localeCompare(b.p.display||''));
+  // When searching, rank by relevance; when just browsing, list alphabetically.
+  if(q) matches.sort((a,b)=>b.score-a.score||(a.p.display||'').localeCompare(b.p.display||''));
+  else matches.sort((a,b)=>(a.p.display||'').localeCompare(b.p.display||''));
   const out = document.getElementById('find-results');
+  const count = document.getElementById('find-count');
   if(!matches.length) {
+    if(count) count.textContent = '';
     out.innerHTML = '<div class="empty" style="grid-column:1/-1"><p>No providers found</p></div>'; return;
   }
-  out.innerHTML = matches.slice(0,60).map(m=>pcHTML(m.key,m.p)).join('');
+  if(count) count.textContent = `${matches.length} provider${matches.length===1?'':'s'}${q||findFilter.type||findFilter.spanish||findFilter.acceptingNew?' shown':''}`;
+  out.innerHTML = matches.map(m=>pcHTML(m.key,m.p)).join('');
 }
 
 // ── PROVIDER CARD HTML ────────────────────────────────────────────────────────
@@ -2411,7 +2335,7 @@ function fillExpand(key) {
     ? `<div class="chip-row">${profileIds.map(id=>{
         const prof = insProfile(id) || {};
         return `<span class="chip ins-chip-link" title="Open BH payer context" onclick="openPayerProfileFromProvider('${esc(id)}', event)">${esc(profileDisplayName(prof).replace(/ — /g,' · '))}</span>`;
-      }).join('')}</div><div class="ins-context-strip" style="margin-top:8px"><b>Provider-profile link:</b> each payer chip opens the BH Payer Navigator with this provider's roster profile context.</div>`
+      }).join('')}</div><div class="ins-context-strip" style="margin-top:8px"><b>Tip:</b> each payer chip opens the Insurance section with this provider's roster profile loaded.</div>`
     : '<span style="color:var(--ink-3);font-size:.8rem">No credentialing profile data</span>';
   const doxyHtml = p.doxy
     ? `<div class="info-row"><span class="info-icon">` + VIDEO_ICON + `</span><span class="info-val"><a href="${esc(p.doxy)}" target="_blank" style="color:var(--brand)">${esc(p.doxy)}</a></span></div>` : '';
@@ -2441,27 +2365,6 @@ function useForAppt(key) {
   document.getElementById('rm-prov').value = p.display||key;
   go('appt'); toast('Provider loaded');
 }
-
-// ── DIRECTORY ─────────────────────────────────────────────────────────────────
-let dirFilter = '';
-function dirChip(el,val) {
-  document.querySelectorAll('#sec-dir .chip').forEach(c=>c.classList.remove('active'));
-  dirFilter=val; if(val) el.classList.add('active'); runDir();
-}
-function runDir() {
-  const q = (document.getElementById('dir-inp').value||'').toLowerCase();
-  const matches = [];
-  for(const [k,p] of Object.entries(providers)) {
-    if(dirFilter && p.type!==dirFilter) continue;
-    if(q && !(p.display||'').toLowerCase().includes(q)) continue;
-    matches.push([k,p]);
-  }
-  matches.sort((a,b)=>(a[1].display||'').localeCompare(b[1].display||''));
-  const out = document.getElementById('dir-results');
-  if(!matches.length) { out.innerHTML='<div class="empty" style="grid-column:1/-1"><p>No providers found</p></div>'; return; }
-  out.innerHTML = matches.map(([k,p])=>pcHTML(k,p)).join('');
-}
-
 
 function renderOfficeGrid() {
   const grid = document.getElementById('off-grid');
@@ -2628,7 +2531,7 @@ function renderInsuranceAccordions() {
   wrap.innerHTML = `${renderInsGuidePanel()}
     <div class="ins-kb-shell">
       <details class="ins-library-details" id="ins-library-details">
-        <summary><span>Payer library / advanced reference</span><span class="tag tag-accent" id="ins-kb-count">${Object.keys(profiles).length} profiles</span></summary>
+        <summary><span>Browse all payers</span><span class="tag tag-accent" id="ins-kb-count">${Object.keys(profiles).length} profiles</span></summary>
         <div class="ins-library-inner">
           <div class="ins-kb-head"><div><h2>Payer library</h2><p>Use this only when staff need to research the payer profile. The main guide above should be enough for most scheduling questions.</p></div></div>
           <div class="filter-row" id="ins-kb-filters" style="margin-bottom:12px">${filterHtml}</div>
@@ -2933,8 +2836,8 @@ function modalTab(el,pane) {
 }
 
 function goToProvider(display) {
-  closeModal(); go('dir');
-  setTimeout(()=>{ document.getElementById('dir-inp').value=display.replace(/,.*$/,'').trim(); runDir(); },150);
+  closeModal(); go('find');
+  setTimeout(()=>{ findFilter={type:'',spanish:false,acceptingNew:false}; document.querySelectorAll('#sec-find .chip').forEach(c=>c.classList.remove('active')); document.getElementById('find-inp').value=display.replace(/,.*$/,'').trim(); runFind(); },150);
 }
 function closeOffModal(e) { if(e&&e.target!==document.getElementById('off-modal'))return; closeModal(); }
 function closeModal() { document.getElementById('off-modal').classList.remove('open'); document.body.style.overflow=''; }
@@ -3074,7 +2977,7 @@ h2{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;margin-bottom:18px;co
 .ins-quick-label{font-size:.67rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-right:2px;}
 .ins-quick-start .btn{font-size:.75rem;padding:7px 11px;border-radius:999px;}
 .ins-mode-row{margin:12px 24px 0;}
-.ins-guide-grid{grid-template-columns:1fr 1fr 1.35fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
+.ins-guide-grid{grid-template-columns:1.7fr 1fr 1fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
 .ins-guide-field label{font-size:.64rem;}
 .ins-guide-field input,.ins-guide-field select{min-height:39px;}
 .ins-result{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:14px;margin-top:0;}
@@ -3282,7 +3185,7 @@ pre{white-space:pre-wrap;font-family:inherit;font-size:.9rem;}
 .ins-quick-label{font-size:.67rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-right:2px;}
 .ins-quick-start .btn{font-size:.75rem;padding:7px 11px;border-radius:999px;}
 .ins-mode-row{margin:12px 24px 0;}
-.ins-guide-grid{grid-template-columns:1fr 1fr 1.35fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
+.ins-guide-grid{grid-template-columns:1.7fr 1fr 1fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
 .ins-guide-field label{font-size:.64rem;}
 .ins-guide-field input,.ins-guide-field select{min-height:39px;}
 .ins-result{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:14px;margin-top:0;}
@@ -3471,7 +3374,7 @@ th{text-align:left;padding:7px 10px;background:#f0f4f8;font-size:.72rem;text-tra
 .ins-quick-label{font-size:.67rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);margin-right:2px;}
 .ins-quick-start .btn{font-size:.75rem;padding:7px 11px;border-radius:999px;}
 .ins-mode-row{margin:12px 24px 0;}
-.ins-guide-grid{grid-template-columns:1fr 1fr 1.35fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
+.ins-guide-grid{grid-template-columns:1.7fr 1fr 1fr 1fr;margin:12px 24px 18px;padding:14px;border-radius:22px;}
 .ins-guide-field label{font-size:.64rem;}
 .ins-guide-field input,.ins-guide-field select{min-height:39px;}
 .ins-result{grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);gap:14px;margin-top:0;}
@@ -3606,7 +3509,7 @@ document.addEventListener('keydown',e=>{
 function cmdkSearch() {
   const q=(document.getElementById('cmdk-inp').value||'').toLowerCase().trim();
   const results=[];
-  [['Find a Provider','find'],['Appointments','appt'],['Directory','dir'],['Offices','off'],['BH Payer Navigator','ins'],['Data Health','health']].forEach(([l,s])=>{
+  [['Providers','find'],['Insurance','ins'],['Offices','off'],['Appointments','appt'],['Data Health','health']].forEach(([l,s])=>{
     if(!q||l.toLowerCase().includes(q)) results.push({type:'nav',label:l,sub:'Portal section',tag:'Section',action:`go('${s}')`});
   });
   if(q.length>1) Object.values((D||{}).ins_profiles||{}).forEach(p=>{
@@ -3618,7 +3521,7 @@ function cmdkSearch() {
     const profileText=(p.insuranceProfileIds||[]).map(id=>{const prof=insProfile(id)||{}; return [profileDisplayName(prof), prof.name, prof.canonicalName, ...(prof.aliases||[])].join(' ')}).join(' ').toLowerCase();
     if((p.display||'').toLowerCase().includes(q) || profileText.includes(q))
       results.push({type:'prov',label:p.display||k,sub:`${p.type||'Provider'}${profileText.includes(q)?' · payer match':''}`,tag:'Provider',
-        action:`go('dir');setTimeout(()=>{document.getElementById('dir-inp').value='${(p.display||'').replace(/'/g,"\'")}';runDir();},100)`});
+        action:`go('find');setTimeout(()=>{findFilter={type:'',spanish:false,acceptingNew:false};document.querySelectorAll('#sec-find .chip').forEach(c=>c.classList.remove('active'));document.getElementById('find-inp').value='${(p.display||'').replace(/'/g,"\'")}';runFind();},100)`});
   });
   if(q.length>1) Object.entries(offices).forEach(([k,o])=>{
     const text=[k,o.name,o.address,o.phone,o.hours].join(' ').toLowerCase();
