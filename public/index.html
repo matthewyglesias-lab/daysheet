@@ -263,6 +263,32 @@ body.theme-dark .sidebar{background:rgba(20,29,36,.72);}
 .home-tile-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--brand-soft);color:var(--brand);}
 .home-tile-title{font-weight:700;font-size:.98rem;color:var(--ink);}
 .home-tile-desc{font-size:.8rem;color:var(--ink-3);line-height:1.4;}
+/* provider profile: booking rules, credentials, flags */
+.booking-rules{background:var(--warn-soft);border:1px solid rgba(245,158,11,.24);border-radius:12px;padding:11px 13px;margin-bottom:14px;}
+.booking-rules .sec-label{color:var(--warn);margin-bottom:7px;}
+.booking-rules ul{margin:0;padding-left:2px;list-style:none;display:flex;flex-direction:column;gap:5px;}
+.booking-rules li{font-size:.82rem;color:var(--ink);line-height:1.45;display:flex;gap:7px;align-items:flex-start;}
+.booking-rules li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--warn);margin-top:7px;flex-shrink:0;}
+.cred-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:14px;}
+.cred-item{background:var(--rail);border:1px solid var(--border);border-radius:10px;padding:8px 11px;min-width:0;}
+.cred-label{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-3);}
+.cred-val{font-size:.84rem;color:var(--ink);font-family:'JetBrains Mono',monospace;margin-top:2px;word-break:break-word;}
+.cred-val.missing{color:var(--warn);font-family:inherit;font-style:italic;font-size:.8rem;}
+.prof-flags{margin-bottom:14px;display:flex;flex-direction:column;gap:6px;}
+.prof-flag{display:flex;gap:8px;align-items:flex-start;font-size:.8rem;line-height:1.4;padding:8px 11px;border-radius:10px;}
+.prof-flag b{font-weight:800;}
+.prof-flag.error{background:var(--bad-soft);color:var(--bad);}
+.prof-flag.warn{background:var(--warn-soft);color:var(--warn);}
+.prof-flag.info{background:var(--accent-soft);color:var(--accent);}
+/* insurance empty state */
+.ins-empty-state{text-align:center;padding:32px 20px;}
+.ins-empty-icon{width:46px;height:46px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:1.25rem;margin:0 auto 12px;}
+.ins-empty-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;color:var(--ink);}
+.ins-empty-copy{font-size:.85rem;color:var(--ink-2);max-width:460px;margin:6px auto 18px;line-height:1.5;}
+.ins-empty-label{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-3);margin-bottom:9px;}
+.ins-empty-state .chip-row{justify-content:center;max-width:580px;margin:0 auto;flex-wrap:wrap;}
+.ins-empty-state .chip{cursor:pointer;}
+.ins-provider-row .status-pill{margin-left:auto;flex-shrink:0;}
 .card-chev{margin-left:auto;color:var(--ink-3);flex-shrink:0;transition:transform .3s var(--ease);}
 .card-chev.open{transform:rotate(180deg);}
 .card-inner{padding:16px 18px;}
@@ -1896,16 +1922,35 @@ function providerPayerInsightHtml(p){
 function insMapHtml(route){
   return `<div class="ins-route-map">${route.map((r,i)=>`<div class="ins-route-step"><div class="ins-route-dot">${i+1}</div><div><div class="ins-route-label">${esc(r.label)}</div><div class="ins-route-value">${esc(r.value)}</div></div></div>`).join('')}</div>`;
 }
+function insEmptyStateHtml(){
+  const commons = ['iehp','blue_shield_commercial','blue_cross_anthem','molina_healthcare','traditional_medicare','aetna','cigna_evernorth','optum_commercial','carelon_beacon_commercial','triwest_tricare','caloptima_medi_cal'];
+  const profs = D.ins_profiles||{};
+  const chips = commons.filter(id=>profs[id]).map(id=>`<button class="chip" onclick="insQuickPayer('${id}')">${esc(insShortName(profs[id]))}</button>`).join('');
+  return `<div class="ins-empty-state">
+    <div class="ins-empty-icon">◆</div>
+    <div class="ins-empty-title">Start with the patient's insurance</div>
+    <p class="ins-empty-copy">Type what the card or portal says above, or pick a common payer — you'll get a plain-English scheduling read and the providers who take it.</p>
+    <div class="ins-empty-label">Common payers</div>
+    <div class="chip-row">${chips}</div>
+  </div>`;
+}
+function insQuickPayer(id){
+  const p = insProfile(id); if(!p) return;
+  const el = document.getElementById('ins-card-says'); if(el) el.value = insShortName(p);
+  insRenderGuide();
+}
 function insProviderSummaryHtml(guide){
-  if(!guide.profile) return `<p class="ins-empty-note">Enter a payer/card term to show roster-linked providers and provider types.</p>`;
+  if(!guide.profile) return `<p class="ins-empty-note">Enter a payer/card term to show the providers who take it.</p>`;
+  const stop = new Set(['MD','NP','PMHNP','LCSW','DO','PhD','Dr.','Dr']);
   const types = Object.entries(guide.typeCounts).sort((a,b)=>b[1]-a[1]).slice(0,4).map(([type,count])=>`<div class="ins-provider-pill"><strong>${count}</strong><span>${esc(type)}</span></div>`).join('');
-  const top = guide.matches.slice(0,7).map(row=>{
-    const p = row.p;
-    const ini = (p.display||'?').split(' ').slice(0,2).map(w=>w[0]||'').join('');
-    const locs = Object.keys(p.locations||{}).slice(0,2).map(l=>l.replace(/_/g,' ')).join(', ');
-    return `<div class="ins-provider-row" onclick="goToProvider('${esc(p.display||row.key)}')"><div class="mini-av">${esc(ini)}</div><div><div class="ins-provider-row-name">${esc(p.display||row.key)}</div><div class="ins-provider-row-meta">${esc(p.type||'Provider')}${locs?' · '+esc(locs):''}${p.noNew?' · no new':''}</div></div></div>`;
+  const top = guide.matches.slice(0,8).map(row=>{
+    const p = row.p; const st = providerStatus(p);
+    const ini = (p.display||'?').split(' ').filter(w=>!stop.has(w)).slice(0,2).map(w=>w[0]||'').join('');
+    const locs = Object.keys(p.locations||{}).slice(0,2).map(l=>l.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())).join(', ');
+    return `<div class="ins-provider-row" onclick="openProviderFromSearch('${row.key.replace(/'/g,"\\'")}')"><div class="mini-av">${esc(ini||'?')}</div><div style="flex:1;min-width:0"><div class="ins-provider-row-name">${esc(p.display||row.key)}</div><div class="ins-provider-row-meta">${esc(p.type||'Provider')}${locs?' · '+esc(locs):''}</div></div><span class="status-pill ${st.cls}">${st.label}</span></div>`;
   }).join('');
-  return `${types?`<div class="ins-provider-summary">${types}</div>`:''}${top?`<div class="ins-provider-list">${top}</div>`:'<p class="ins-empty-note">No roster providers match this payer/service filter yet.</p>'}<div style="margin-top:10px"><button class="btn btn-primary" style="font-size:.76rem;padding:6px 12px" onclick="findByInsProfile('${esc(guide.profile.id)}')">${USER_ICON} Open all matched providers</button></div>`;
+  const total = guide.matches.length;
+  return `${types?`<div class="ins-provider-summary">${types}</div>`:''}${top?`<div class="ins-provider-list">${top}</div>`:'<p class="ins-empty-note">No roster providers match this payer/service filter yet.</p>'}${total>8?`<div style="margin-top:10px"><button class="btn btn-primary" style="font-size:.76rem;padding:6px 12px" onclick="findByInsProfile('${esc(guide.profile.id)}')">${USER_ICON} See all ${total} providers</button></div>`:''}`;
 }
 
 function insCompactLabel(profile){
@@ -1990,6 +2035,8 @@ function insRenderGuide(){
   insSetActiveContext(guide, 'navigator');
   const el = document.getElementById('ins-guide-result');
   if(!el) return;
+  // Empty state: no payer entered yet — invite input instead of showing a canned answer.
+  if(!guide.profile && !args.payerTerm){ el.innerHTML = insEmptyStateHtml(); return; }
   const warningHtml = guide.warnings.map(w=>`<div class="ins-warning"><b>Watch:</b><span>${esc(w)}</span></div>`).join('');
   const checksHtml = guide.checks.slice(0,6).map(c=>`<div class="ins-check">${esc(c)}</div>`).join('');
   const risk = insRiskLevel(guide.profile, guide.effectivePlan, guide.serviceType);
@@ -1997,7 +2044,7 @@ function insRenderGuide(){
   el.innerHTML = `${insContextBarHtml(guide)}<div class="ins-result">
     <div class="ins-result-card ins-result-card-main">
       <h3><span>Plain-English answer</span><span class="tag tag-${esc(risk.tone||'accent')}">${esc(risk.label)}</span></h3>
-      <div class="ins-answer-card" data-tone="${esc(risk.tone||'accent')}"><div class="ins-answer-kicker">Scheduling read</div><div class="ins-answer-main">${esc(risk.text)}</div><div class="ins-answer-sub">Use this as a routing clue, then verify the exact product, behavioral benefit, authorization/referral requirement, and roster/provider match.</div></div>
+      <div class="ins-answer-card" data-tone="${esc(risk.tone||'accent')}"><div class="ins-answer-kicker">Scheduling read</div><div class="ins-answer-main">${esc(risk.text)}</div><div class="ins-answer-sub">Then confirm the exact product, behavioral benefit, and any auth/referral before you book.</div></div>
       <div class="ins-staff-translation"><b>Staff translation:</b> ${esc(guide.staffTranslation)}</div>
       ${warningHtml}
     </div>
@@ -2385,6 +2432,34 @@ function providerStatus(p){
   if(p.noNew) return {cls:'s-nonew',label:'Not taking new'};
   return {cls:'s-new',label:'Accepting new'};
 }
+// Turn the messy raw notes field into a clean, de-duplicated list of booking rules.
+// Notes are often the same text repeated, with the provider's name acting as a separator.
+function parseBookingRules(p){
+  const raw = (p.notes||'').trim();
+  const disp = (p.display||'').trim();
+  const nameWords = new Set(disp.toLowerCase().split(/[^a-z]+/).filter(Boolean));
+  const creds = new Set(['md','do','np','pmhnp','lcsw','lmft','mft','amft','phd','psyd','dr','rn']);
+  // Split on the provider's full name (case-insensitive) as well as pipes/newlines.
+  let chunks = [raw];
+  if(disp){ const re = new RegExp(disp.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'ig'); chunks = raw.split(re); }
+  const parts = [];
+  chunks.forEach(c => c.split(/[|\n]+/).forEach(x => { x = x.replace(/\s+/g,' ').trim(); if(x) parts.push(x); }));
+  const seen = new Set(); const rules = [];
+  for(let s of parts){
+    // drop a trailing bare credential left dangling by the name split (e.g. "... NP")
+    s = s.replace(/[\s|,-]+(?:MD|DO|NP|PMHNP|LCSW|LMFT|MFT|AMFT|PhD|PsyD|RN)\.?$/i,'').trim();
+    const norm = s.toLowerCase().replace(/[^a-z0-9]/g,'');
+    if(!norm || seen.has(norm)) continue; seen.add(norm);
+    const tokens = s.split(/\s+/).map(t=>t.toLowerCase().replace(/[^a-z0-9]/g,'')).filter(Boolean);
+    const meaningful = tokens.filter(t=>!nameWords.has(t)&&!creds.has(t));
+    if(!meaningful.length) continue; // segment was just the provider's name/credential
+    rules.push(s);
+  }
+  // Age is a first-class rule — surface it up front if it isn't already captured.
+  const age = (p.age||'').trim();
+  if(age && !rules.some(r=>/age/i.test(r))) rules.unshift('Age: '+age);
+  return rules;
+}
 function pcHTML(key, p) {
   const stopWords = new Set(['MD','NP','PMHNP','LCSW','DO','PhD','Dr.','Dr']);
   const ini = (p.display||'?').split(' ').filter(w=>!stopWords.has(w)).slice(0,2).map(w=>w[0]||'').join('');
@@ -2441,6 +2516,23 @@ function fillExpand(key) {
   }
   const doxyHtml = p.doxy
     ? `<div class="info-row"><span class="info-icon">` + VIDEO_ICON + `</span><span class="info-val"><a href="${esc(p.doxy)}" target="_blank" style="color:var(--brand)">${esc(p.doxy)}</a></span></div>` : '';
+  // booking rules parsed out of the raw notes — the hard constraints staff must see
+  const rules = parseBookingRules(p);
+  const rulesHtml = rules.length
+    ? `<div class="booking-rules"><div class="sec-label">Booking notes</div><ul>${rules.map(r=>`<li>${esc(r)}</li>`).join('')}</ul></div>` : '';
+  // per-provider data-health flags from the audit
+  const flags = ((typeof getAudit==='function' && getAudit().byProvider[key]) || []);
+  const flagHtml = flags.length
+    ? `<div class="prof-flags">${flags.map(f=>`<div class="prof-flag ${f.sev}"><b>${esc((HEALTH_RULES[f.rule]||{}).label||f.rule)}:</b> ${esc(f.detail)}</div>`).join('')}</div>` : '';
+  // credentials — billing/verification identifiers
+  const isRx = ['MD','DO','NP','PMHNP'].includes(p.type);
+  const credCell = (label,val,warnIfMissing)=>`<div class="cred-item"><div class="cred-label">${label}</div><div class="cred-val${val?'':(warnIfMissing?' missing':'')}">${val?esc(val):(warnIfMissing?'Not on file':'—')}</div></div>`;
+  const credHtml = `<div class="cred-grid">
+    ${credCell('NPI', p.npi, isRx)}
+    ${credCell('DEA', p.dea, isRx)}
+    ${credCell('License', p.license, isRx)}
+    ${credCell('Supervisor', p.supervisor, false)}
+  </div>`;
   // secondary details — lower in the hierarchy
   const details = [];
   if(p.spanish) details.push('<span class="tag tag-brand">Spanish-speaking</span>');
@@ -2459,8 +2551,11 @@ function fillExpand(key) {
     : '<span style="color:var(--ink-3);font-size:.8rem">No credentialing profile data</span>';
   el.innerHTML = `
     <div class="expand-status"><span class="status-pill ${st.cls}">${st.label}</span></div>
+    ${rulesHtml}
+    ${flagHtml}
     ${schedHtml?`<div style="margin-bottom:12px"><div class="sec-label">Schedule</div>${schedHtml}</div>`:'<div class="sec-label">Schedule</div><p style="color:var(--ink-3);font-size:.8rem;margin-bottom:12px">No schedule mapped — confirm availability before booking.</p>'}
     ${doxyHtml?`<div style="margin-bottom:12px"><div class="sec-label">Telehealth link</div>${doxyHtml}</div>`:''}
+    <div class="sec-label">Credentials</div>${credHtml}
     ${details.length?`<div class="chip-row" style="margin-bottom:12px">${details.join('')}</div>`:''}
     <div style="margin-bottom:12px"><div class="sec-label">Insurance</div>${providerPayerInsightHtml(p)}${chipHtml}</div>
     <div style="display:flex;gap:7px;flex-wrap:wrap">
